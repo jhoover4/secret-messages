@@ -18,15 +18,6 @@ import string
 
 # make sure to follow PEP 8
 
-# EXTRA CREDIT
-
-# implement a one-time pad to secure the cipher.
-# a one-time pad is an additional input step
-# required prior to enc or decrypt a message. As long
-# as both the sender and receiver use the same pad,
-# the message itself becomes secure. Without the pad,
-# the message cannot be recovered.
-
 
 class Cipher:
 

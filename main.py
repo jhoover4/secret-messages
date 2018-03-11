@@ -4,9 +4,8 @@ from bifid_cipher import Bifid
 
 
 def user_interface():
-    """Command line menu providing an option to either encrypt or decrypt a value
-
-    any add input settings required to perform the cipher process"""
+    """Command line menu providing an option to either encrypt or decrypt a value.
+    Add input settings required to perform the cipher process"""
 
     while True:
         prompt = "Choose an option:\n\n"
@@ -16,16 +15,16 @@ def user_interface():
 
         user_input = input(prompt).strip()
 
-        if user_input.lower() == 'q':
+        if user_input.lower() == "q":
             break
 
         while user_input != "1" or user_input != "2":
             user_input = input(prompt).strip()
 
-        if user_input == '1':
+        if user_input == "1":
             run_cipher()
 
-        if user_input == '2':
+        if user_input == "2":
             run_cipher(encrypt=False)
 
 
@@ -40,11 +39,11 @@ def run_cipher(encrypt=True):
     user_input = input(prompt)
     text = input("Enter value:\n\n").replace(" ", "")
 
-    if user_input == '1':
+    if user_input == "1":
         return Affine.encrypt(text)
 
-    if user_input == '2':
+    if user_input == "2":
         return Atbash.encrypt(text)
 
-    if user_input == '3':
+    if user_input == "3":
         return Bifid.encrypt(text)
