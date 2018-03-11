@@ -29,4 +29,4 @@ class Atbash(Cipher):
         return decypted_val
 
 if __name__ == "__main__":
-    # for testing purposes
+    pass

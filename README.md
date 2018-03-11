@@ -2,7 +2,7 @@
 
 This is the second project in Treehouse Python tech degree.
 
-To use run league_builder.py
+To use run secret_messages.py
 
 ## Description
 
