@@ -1,10 +1,10 @@
 import os
-import string
 
 from affine_cipher import Affine
 from atbash_cipher import Atbash
 from bifid_cipher import Bifid
 from caesar_cipher import Caesar
+
 
 def clear():
     """Clears screen"""
@@ -16,6 +16,7 @@ def user_interface():
     """Command line menu providing an option to either encrypt or decrypt a value.
     Add input settings required to perform the cipher process"""
 
+    global encrypt_val
     while True:
         clear()
 
@@ -55,6 +56,7 @@ def user_interface():
 
         input("Press Enter to continue...")
 
+
 def run_cipher(encrypt=True):
     """Sub menu with a list of implemented ciphers"""
 
@@ -90,25 +92,30 @@ def run_cipher(encrypt=True):
         text = ask_for_value()
 
     if user_input in affine_input:
-        cipher = Affine(text)
+        cipher = Affine()
 
     if user_input in atbash_input:
-        cipher = Atbash(text)
+        cipher = Atbash()
 
     if user_input in bifid_input:
-        cipher = Bifid(text)
+        cipher = Bifid()
 
     if user_input in caesar_input:
-        cipher = Caesar(text)
+        cipher = Caesar()
 
-    if encrypt == True:
+    if encrypt:
         val = cipher.encrypt(text)
     else:
         val = cipher.decrypt(text)
 
     return cipher.char_blocks(val)
 
+
 def pad_option():
+    """Option for pad to add additional encryption"""
+
+    # TODO: complete pad functionality
+
     prompt = "Please enter the pad number:\n\n"
     user_input = str(input(prompt))
 
@@ -116,6 +123,7 @@ def pad_option():
         print("Value must contain letters only.\n")
 
         user_input = str(input(prompt))
+
 
 if __name__ == "__main__":
     user_interface()
