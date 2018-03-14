@@ -1,9 +1,9 @@
 import os
 
-from affine_cipher import Affine
-from atbash_cipher import Atbash
-from bifid_cipher import Bifid
-from caesar_cipher import Caesar
+from affine import Affine
+from atbash import Atbash
+from bifid import Bifid
+from caesar import Caesar
 
 
 def clear():

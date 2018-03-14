@@ -1,12 +1,12 @@
 import string
 
-from cipher import Cipher
+from ciphers import Cipher
+
 
 class Caesar(Cipher):
-
     FORWARD = string.ascii_uppercase * 3
 
-    def __init__(self, keyword=None, offset=3):
+    def __init__(self, offset=3):
         self.offset = offset
         self.FORWARD = string.ascii_uppercase + string.ascii_uppercase[:self.offset+1]
         self.BACKWARD = string.ascii_uppercase[:self.offset+1] + string.ascii_uppercase
@@ -34,11 +34,3 @@ class Caesar(Cipher):
             else:
                 output.append(self.BACKWARD[index-self.offset])
         return ''.join(output)
-
-
-if __name__ == "__main__":
-    atbash  = Caesar()
-    encrypted_text  = atbash.encrypt("testing this code! 2pm")
-    print(encrypted_text)
-    decrypted_text  = atbash.decrypt(encrypted_text)
-    print(decrypted_text)
