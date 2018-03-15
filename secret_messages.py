@@ -14,7 +14,8 @@ def clear():
 
 def user_interface():
     """Command line menu providing an option to either encrypt or decrypt a value.
-    Add input settings required to perform the cipher process"""
+    Add input settings required to perform the cipher process.
+    """
 
     global encrypt_val
     while True:
@@ -90,12 +91,26 @@ def run_cipher(encrypt=True):
         print("Value must contain letters only.\n")
         text = ask_for_value()
 
+    # Affine inputs
     if user_input in affine_input:
-        cipher = Affine()
+        aff_first_number = input("Please enter a beginning number for the Atbase cipher (must be odd):\n")
+        aff_second_number = input("Please enter an ending number for the Atbase cipher:\n")
 
+        while aff_first_number.isnumeric() is False\
+                or int(aff_first_number) % 2 == 0\
+                or aff_second_number.isnumeric() is False\
+                or int(aff_second_number) not in range(26):
+            print("Value must contain numbers. First number must be odd.\n")
+            aff_first_number = input("Please enter keyword for the Keyword Cipher (must be odd):\n")
+            aff_second_number = input("Please enter an ending number for the Atbase cipher:\n")
+
+        cipher = Affine(aff_first_number, aff_second_number)
+
+    # Atbash inputs
     if user_input in atbash_input:
         cipher = Atbash()
 
+    # Keyword inputs
     if user_input in keyword_cipher_input:
         user_keyword = input("Please enter your keyword for the Keyword Cipher:\n")
 
