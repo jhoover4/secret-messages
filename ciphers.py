@@ -14,8 +14,9 @@ class Cipher:
         raise NotImplementedError()
 
     def char_blocks(self, encryption, padding=' '):
-        """output is displayed in 5 char blocks, with padding added as required. For
-            example: The quick brown fox. = LFDKA NMYML K1KZE &XPQR"""
+        """Output is displayed in 5 char blocks, with padding added as required.
+        Sample output: The quick brown fox. = LFDKA NMYML K1KZE &XPQR
+        """
 
         if len(encryption) < 5:
             return encryption
@@ -32,9 +33,7 @@ class Cipher:
                 end_count += 5
                 beg_count += 5
             if end_count != list_len:
-                rest_of_list = (list_len - beg_count) + 1
-
-                blocks.append(encryption[rest_of_list:])
+                blocks.append(encryption[beg_count:])
 
             return padding.join(blocks)
 
@@ -42,7 +41,7 @@ class Cipher:
         return decryption.replace(padding, "")
 
     def create_pad(self, text, keyword, encrypt = True):
-        """Pad is a key that add numbers of letters in alphabet to encrypted message
+        """Pad is a key that adds numbers of letters in key to correspond letter numbers of encrypted message
         to create a new encrypted message.
         """
 
@@ -63,32 +62,23 @@ class Cipher:
         return pad
 
     def pad_encrypt(self, text, keyword):
+        """Uses pad to add additional encryption to message.
+        """
 
         text = text.lower()
         pad = self.create_pad(text, keyword)
 
-        if not self.pad_alphabet:
-            print("Error: Pad not created. Please create a pad first.\n")
-            return
-        else:
-            encrypted_text = [self.pad_alphabet[letter] for letter in text]
-
-
+        encrypted_text = [pad[letter] for letter in text]
 
         return "".join(encrypted_text)
 
     def pad_decrypt(self, text, keyword):
+        """Reverses pad encryption on message.
+        """
 
         text = text.lower()
         pad = self.create_pad(text, keyword, encrypt=False)
 
-        if not pad:
-            print("Error: Pad not created. Please create a pad first.\n")
-            return
-        else:
-            decrypted_text = []
-
-            for letter in text:
-                decrypted_text.append(pad[letter])
+        decrypted_text = [pad[letter] for letter in text]
 
         return "".join(decrypted_text)
