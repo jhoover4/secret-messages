@@ -11,7 +11,9 @@ class Affine(Cipher):
             affine_dict = {}
 
             for i in range(26):
-                affine_dict[chr(i + 65).lower()] = chr(((start_num * i + end_num) % 26) + 65).lower()
+                affine_val = (start_num * i + end_num) % 26
+
+                affine_dict[self.alphabet(i)] = self.alphabet[affine_val]
 
             return affine_dict
 

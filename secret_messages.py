@@ -50,13 +50,12 @@ def user_interface():
         if user_input in decrypt_input:
             decrypt_val = run_cipher(encrypt=False)
 
-            if encrypt_val == 'q':
+            if decrypt_val == 'q':
                 break
 
             print("\nYour decrypted value is: {}\n".format(decrypt_val))
 
-        input("Press Enter to continue...")
-
+        input("Press any key to continue.")
 
 def run_cipher(encrypt=True):
     """Sub menu with a list of implemented ciphers"""
@@ -112,20 +111,24 @@ def run_cipher(encrypt=True):
 
     if encrypt:
         text = cipher.encrypt(text)
+        if input("Do you want to add a secret pad? (Y/n)\n").lower() == "y":
+            text = pad_option(text, cipher)
+
         val = cipher.char_blocks(text)
     else:
         text = cipher.remove_char_blocks(text)
+        if input("Was a secret pad used? (Y/n)\n").lower() == "y":
+            text = pad_option(text, cipher, encrypt=False)
+
         val = cipher.decrypt(text)
 
     return val
 
 
-def pad_option():
-    """Option for pad to add additional encryption"""
+def pad_option(text, cipher, encrypt=True):
+    """Option for pad to add additional encryption."""
 
-    # TODO: complete pad functionality
-
-    prompt = "Please enter the pad number:\n\n"
+    prompt = "Please enter the pad keyword, it must be at least ({}) letters:\n".format(len(text))
     user_input = str(input(prompt))
 
     while user_input.lower().isalpha() is False:
@@ -133,6 +136,10 @@ def pad_option():
 
         user_input = str(input(prompt))
 
+    if encrypt:
+        return cipher.pad_encrypt(text, user_input)
+    else:
+        return cipher.pad_decrypt(text, user_input)
 
 if __name__ == "__main__":
     user_interface()
