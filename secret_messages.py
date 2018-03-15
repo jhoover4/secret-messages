@@ -2,7 +2,6 @@ import os
 
 from affine import Affine
 from atbash import Atbash
-from bifid import Bifid
 from caesar import Caesar
 from keyword_cipher import Keyword
 
