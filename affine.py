@@ -3,8 +3,19 @@ from ciphers import Cipher
 
 class Affine(Cipher):
 
-    def __init__(self, **kwargs):
+    def __init__(self, start_num, end_num, **kwargs):
         super().__init__()
+
+        def affine(start_num, end_num):
+
+            affine_dict = {}
+
+            for i in range(26):
+                affine_dict[chr(i + 65).lower()] = chr(((start_num * i + end_num) % 26) + 65).lower()
+
+            return affine_dict
+
+        self.affine_alphabet = affine(start_num, end_num)
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -18,42 +29,31 @@ class Affine(Cipher):
 
         text = text.lower()
 
-        pos = [(self.alphabet.index(letter) * 5) + 8 for letter in text]
-        new_pos = []
+        encrypted_text = [self.affine_alphabet[letter] for letter in text]
 
-        for num in pos:
-            while num > 25:
-                num -= 25
-            new_pos.append(num)
-
-        encrypted_val = "".join([self.alphabet[pos] for pos in new_pos])
-
-        return encrypted_val.upper()
+        return "".join(encrypted_text).upper()
 
     def decrypt(self, text):
         """Decryption for Affine:
-        Do the reverse by substracting 8 from value of
+        Do the reverse by subtracting 8 from value of
         letter multiplying by 21 then mod 26 to loop around
         """
 
         text = text.lower()
 
-        pos = [(self.alphabet.index(letter) / 5) - 8 for letter in text]
-        new_pos = []
+        decrypted_text = []
 
-        for num in pos:
-            while num > 25:
-                num -= 25
-            new_pos.append(num)
+        for letter in text:
+            for key, val in self.affine_alphabet.items():
+                if letter == val:
+                    decrypted_text.append(key)
 
-        # TODO: finish affine decryption
-        decypted_val = ''
-
-        return decypted_val.upper()
+        return "".join(decrypted_text).upper()
 
 
 if __name__ == "__main__":
     # for debugging purposes
 
-    test = Affine()
+    test = Affine(5, 8)
     test.encrypt('word')
+    test.decrypt('oapx')
