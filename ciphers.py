@@ -3,7 +3,7 @@ import string
 
 class Cipher:
 
-    def __init__(self, keyword=None):
+    def __init__(self):
         self.alphabet = list(string.ascii_lowercase)
         self.alphabet_rev = self.alphabet[::-1]
 
@@ -40,45 +40,39 @@ class Cipher:
     def remove_char_blocks(self, decryption, padding=' '):
         return decryption.replace(padding, "")
 
-    def create_pad(self, text, keyword, encrypt = True):
+    def create_pad(self, text, keyword, encrypt=True):
         """Pad is a key that adds numbers of letters in key to correspond letter numbers of encrypted message
         to create a new encrypted message.
         """
 
         text = text.lower()
         keyword = keyword.lower()
-        keyword = keyword[:len(text)] # we only need the letters that correspond to the text value
+        keyword = keyword[:len(text)]  # we only need the letters that correspond to the text value
 
-        pad = {}
+        pad = []
         for i in range(len(keyword)):
             if encrypt:
                 keyword_num_val = (self.alphabet.index(text[i]) + self.alphabet.index(keyword[i])) % 26
             else:
                 keyword_num_val = (self.alphabet.index(text[i]) - self.alphabet.index(keyword[i])) % 26
+
             new_letter = self.alphabet[keyword_num_val]
 
-            pad[text[i]] = new_letter
+            pad.append((text[i], new_letter))
 
         return pad
 
-    def pad_encrypt(self, text, keyword):
-        """Uses pad to add additional encryption to message.
+    def use_pad(self, text, keyword, encrypt=True):
+        """Reads pad to encrypt or decrypt message
         """
 
         text = text.lower()
-        pad = self.create_pad(text, keyword)
+        pad = self.create_pad(text, keyword, encrypt=encrypt)
 
-        encrypted_text = [pad[letter] for letter in text]
+        encrypted_text = []
+
+        for i in range(len(text)):
+            encrypted_text.append(pad[i][1])
+            i += 1
 
         return "".join(encrypted_text)
-
-    def pad_decrypt(self, text, keyword):
-        """Reverses pad encryption on message.
-        """
-
-        text = text.lower()
-        pad = self.create_pad(text, keyword, encrypt=False)
-
-        decrypted_text = [pad[letter] for letter in text]
-
-        return "".join(decrypted_text)

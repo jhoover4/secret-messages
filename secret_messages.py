@@ -93,16 +93,15 @@ def run_cipher(encrypt=True):
 
     # Affine inputs
     if user_input in affine_input:
-        aff_first_number = input("Please enter a beginning number for the Atbase cipher (must be odd):\n")
-        aff_second_number = input("Please enter an ending number for the Atbase cipher:\n")
+        aff_first_number = input("Please enter a beginning number for the Affine cipher (must be odd):\n")
+        aff_second_number = input("Please enter an ending number for the Affine cipher:\n")
 
         while aff_first_number.isnumeric() is False\
                 or int(aff_first_number) % 2 == 0\
-                or aff_second_number.isnumeric() is False\
-                or int(aff_second_number) not in range(26):
+                or aff_second_number.isnumeric() is False:
             print("Value must contain numbers. First number must be odd.\n")
-            aff_first_number = input("Please enter keyword for the Keyword Cipher (must be odd):\n")
-            aff_second_number = input("Please enter an ending number for the Atbase cipher:\n")
+            aff_first_number = input("Please enter a beginning number for the Affine Cipher (must be odd):\n")
+            aff_second_number = input("Please enter an ending number for the Affine cipher:\n")
 
         cipher = Affine(aff_first_number, aff_second_number)
 
@@ -151,9 +150,9 @@ def pad_option(text, cipher, encrypt=True):
         user_input = str(input(prompt))
 
     if encrypt:
-        return cipher.pad_encrypt(text, user_input)
+        return cipher.use_pad(text, user_input)
     else:
-        return cipher.pad_decrypt(text, user_input)
+        return cipher.use_pad(text, user_input, encrypt=False)
 
 if __name__ == "__main__":
     user_interface()
