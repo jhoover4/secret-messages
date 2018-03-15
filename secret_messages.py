@@ -57,6 +57,7 @@ def user_interface():
 
         input("Press any key to continue.")
 
+
 def run_cipher(encrypt=True):
     """Sub menu with a list of implemented ciphers"""
 
@@ -96,8 +97,8 @@ def run_cipher(encrypt=True):
         aff_first_number = input("Please enter a beginning number for the Affine cipher (must be odd):\n")
         aff_second_number = input("Please enter an ending number for the Affine cipher:\n")
 
-        while aff_first_number.isnumeric() is False\
-                or int(aff_first_number) % 2 == 0\
+        while aff_first_number.isnumeric() is False \
+                or int(aff_first_number) % 2 == 0 \
                 or aff_second_number.isnumeric() is False:
             print("Value must contain numbers. First number must be odd.\n")
             aff_first_number = input("Please enter a beginning number for the Affine Cipher (must be odd):\n")
@@ -153,6 +154,7 @@ def pad_option(text, cipher, encrypt=True):
         return cipher.use_pad(text, user_input)
     else:
         return cipher.use_pad(text, user_input, encrypt=False)
+
 
 if __name__ == "__main__":
     user_interface()

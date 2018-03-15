@@ -20,7 +20,8 @@ to the cipher.
 My ciphers:
 - Affine
 - Atbash
-- Bifid
+- Caesar
+- Keyword
 
 ## Extra Credit
 
