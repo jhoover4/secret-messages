@@ -1,4 +1,4 @@
-from cipher import Cipher
+from ciphers import Cipher
 
 
 class Affine(Cipher):
@@ -16,6 +16,8 @@ class Affine(Cipher):
         loop around
         """
 
+        text = text.lower()
+
         pos = [(self.alphabet.index(letter) * 5) + 8 for letter in text]
         new_pos = []
 
@@ -26,13 +28,15 @@ class Affine(Cipher):
 
         encrypted_val = "".join([self.alphabet[pos] for pos in new_pos])
 
-        return encrypted_val
+        return encrypted_val.upper()
 
     def decrypt(self, text):
         """Decryption for Affine:
         Do the reverse by substracting 8 from value of
         letter multiplying by 21 then mod 26 to loop around
         """
+
+        text = text.lower()
 
         pos = [(self.alphabet.index(letter) / 5) - 8 for letter in text]
         new_pos = []
@@ -45,7 +49,7 @@ class Affine(Cipher):
         # TODO: finish affine decryption
         decypted_val = ''
 
-        return decypted_val
+        return decypted_val.upper()
 
 
 if __name__ == "__main__":

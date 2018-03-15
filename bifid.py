@@ -1,4 +1,4 @@
-from cipher import Cipher
+from ciphers import Cipher
 
 
 class Bifid(Cipher):

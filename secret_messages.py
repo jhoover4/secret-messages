@@ -4,6 +4,7 @@ from affine import Affine
 from atbash import Atbash
 from bifid import Bifid
 from caesar import Caesar
+from keyword_cipher import Keyword
 
 
 def clear():
@@ -64,17 +65,17 @@ def run_cipher(encrypt=True):
     prompt = "Choose a cipher to use:\n\n"
     prompt += "1) (Af)fine\n"
     prompt += "2) (At)bash\n"
-    prompt += "3) (B)ifid\n"
-    prompt += "4) (C)aesar\n\n"
+    prompt += "3) (C)aesar\n"
+    prompt += "4) (K)eyword\n\n"
     prompt += "Type (q) to quit.\n"
 
     user_input = str(input(prompt))
 
     affine_input = [1, '1', 'af']
     atbash_input = [2, '2', 'at']
-    bifid_input = [3, '3', 'b']
-    caesar_input = [4, '4', 'c']
-    valid_input = affine_input + atbash_input + bifid_input + caesar_input
+    caesar_input = [3, '4', 'c']
+    keyword_cipher_input = [4, '3', 'k']
+    valid_input = affine_input + atbash_input + keyword_cipher_input + caesar_input
 
     if user_input.lower() == "q":
         return "q"
@@ -97,18 +98,26 @@ def run_cipher(encrypt=True):
     if user_input in atbash_input:
         cipher = Atbash()
 
-    if user_input in bifid_input:
-        cipher = Bifid()
+    if user_input in keyword_cipher_input:
+        user_keyword = input("Please enter your keyword for the Keyword Cipher:\n")
+
+        while text.lower().isalpha() is False:
+            print("Value must contain letters only.\n")
+            user_keyword = input("Please enter keyword for the Keyword Cipher:\n")
+
+        cipher = Keyword(user_keyword)
 
     if user_input in caesar_input:
         cipher = Caesar()
 
     if encrypt:
-        val = cipher.encrypt(text)
+        text = cipher.encrypt(text)
+        val = cipher.char_blocks(text)
     else:
+        text = cipher.remove_char_blocks(text)
         val = cipher.decrypt(text)
 
-    return cipher.char_blocks(val)
+    return val
 
 
 def pad_option():
