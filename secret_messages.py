@@ -29,15 +29,15 @@ def user_interface():
 
         user_input = str(input(prompt)).strip()
 
-        if user_input.lower() == "q":
-            break
-
         encrypt_input = [1, '1', 'e']
         decrypt_input = [2, '2', 'd']
-        valid_input = encrypt_input + decrypt_input
+        valid_input = encrypt_input + decrypt_input + ['q']
 
         while user_input not in valid_input:
             user_input = input(prompt).strip()
+
+        if user_input.lower() == "q":
+            break
 
         if user_input in encrypt_input:
             encrypt_val = run_cipher()
