@@ -11,7 +11,7 @@ class Atbash(Cipher):
 
     def encrypt(self, text):
         """Encryption for Atbash:
-        Maps letter in alphabet to its reverse
+        Maps letter in alphabet to its reverse.
         """
 
         text = text.lower()
@@ -23,7 +23,8 @@ class Atbash(Cipher):
 
     def decrypt(self, text):
         """Decryption for Atbash:
-        To return your original input, reference the input_val attribute
+        To return your original input, reference the letter position
+        in the reversed alphabet.
         """
 
         text = text.lower()
@@ -32,7 +33,3 @@ class Atbash(Cipher):
         decrypted_val = "".join([self.alphabet[int(pos)] for pos in alpha_pos])
 
         return decrypted_val.upper()
-
-
-if __name__ == "__main__":
-    pass

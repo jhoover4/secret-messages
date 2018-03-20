@@ -21,7 +21,7 @@ class Keyword(Cipher):
 
     def encrypt(self, text):
         """Encryption for Keyword:
-        Determines the letter matchings of the keyword alphabet to the plain alphabet
+        Determines the letter matching of the keyword alphabet to the plain alphabet.
         """
 
         text = text.lower()
@@ -32,10 +32,9 @@ class Keyword(Cipher):
 
         return ''.join(encrypted_letters).upper()
 
-
     def decrypt(self, text):
         """Decryption for Keyword:
-        Determines the letter matchings of the keyword alphabet to the plain alphabet
+        Determines the letter matching of the keyword alphabet to the plain alphabet.
         """
 
         text = text.lower()
@@ -45,12 +44,3 @@ class Keyword(Cipher):
         decrypted_letters = [self.alphabet[num] for num in text_pos]
 
         return ''.join(decrypted_letters).upper()
-
-
-
-if __name__ == "__main__":
-    # for debugging purposes
-
-    test = Keyword('crazy')
-    test.encrypt('word')
-    test.decrypt('word')

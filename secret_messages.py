@@ -59,7 +59,7 @@ def user_interface():
 
 
 def run_cipher(encrypt=True):
-    """Sub menu with a list of implemented ciphers"""
+    """Sub menu with a list of implemented ciphers."""
 
     clear()
     prompt = "Choose a cipher to use:\n\n"

@@ -18,8 +18,7 @@ class Affine(Cipher):
     def encrypt(self, text):
         """Encryption for Affine:
         Each letter value is multiplied
-        by 5 and then add 8 then mod 26 as if the value is greater than 26 we
-        loop around
+        by 5 add 8, modulo 26.
         """
 
         text = text.lower()
@@ -31,7 +30,7 @@ class Affine(Cipher):
     def decrypt(self, text):
         """Decryption for Affine:
         Do the reverse by subtracting 8 from value of
-        letter multiplying by 21 then mod 26 to loop around
+        letter multiplying by 21 then modulo 26.
         """
 
         text = text.lower()
@@ -43,11 +42,3 @@ class Affine(Cipher):
                     decrypted_text.append(key)
 
         return "".join(decrypted_text).upper()
-
-
-if __name__ == "__main__":
-    # for debugging purposes
-
-    test = Affine(5, 8)
-    test.encrypt('word')
-    test.decrypt('oapx')

@@ -4,6 +4,8 @@ This is the second project in Treehouse Python tech degree.
 
 To use run secret_messages.py
 
+Cipher tests are contained in tests.py.
+
 ## Description
 
 Take a few of the famous ciphers listed and implement 
