@@ -32,10 +32,10 @@ class Cipher:
 
                 end_count += 5
                 beg_count += 5
-            if end_count != list_len:
+            if end_count + 1 != list_len:
                 blocks.append(encryption[beg_count:])
 
-            return padding.join(blocks)
+            return padding.join(blocks).strip()
 
     def remove_char_blocks(self, decryption, padding=' '):
         return decryption.replace(padding, "")
@@ -75,4 +75,4 @@ class Cipher:
             encrypted_text.append(pad[i][1])
             i += 1
 
-        return "".join(encrypted_text)
+        return "".join(encrypted_text).upper()

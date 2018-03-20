@@ -20,6 +20,7 @@ class CipherTests(unittest.TestCase):
 
     def test_char_blocks(self):
         assert self.cipher.char_blocks('testytestytest') == 'testy testy test'
+        assert self.cipher.char_blocks('exactlyten') == 'exact lyten'
 
     def test_use_pad(self):
         assert self.cipher.use_pad(self.test_word, self.pad_word) == 'ESGLC'
