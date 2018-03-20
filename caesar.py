@@ -7,6 +7,8 @@ class Caesar(Cipher):
     FORWARD = string.ascii_uppercase * 3
 
     def __init__(self, offset=3):
+        super().__init__()
+
         self.offset = offset
         self.FORWARD = string.ascii_uppercase + string.ascii_uppercase[:self.offset+1]
         self.BACKWARD = string.ascii_uppercase[:self.offset+1] + string.ascii_uppercase
@@ -21,7 +23,7 @@ class Caesar(Cipher):
                 output.append(char)
             else:
                 output.append(self.FORWARD[index+self.offset])
-        return ''.join(output)
+        return ''.join(output).upper()
 
     def decrypt(self, text):
         output = []
@@ -33,4 +35,4 @@ class Caesar(Cipher):
                 output.append(char)
             else:
                 output.append(self.BACKWARD[index-self.offset])
-        return ''.join(output)
+        return ''.join(output).upper()

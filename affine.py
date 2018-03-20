@@ -6,16 +6,11 @@ class Affine(Cipher):
     def __init__(self, start_num, end_num, **kwargs):
         super().__init__()
 
-        def affine(start_num, end_num):
-
-            affine_dict = {}
-
-            for i in range(26):
-                affine_dict[chr(i + 65).lower()] = chr(((start_num * i + end_num) % 26) + 65).lower()
-
-            return affine_dict
-
-        self.affine_alphabet = affine(start_num, end_num)
+        # create the affine dictionary to encode/decode message
+        self.affine_dict = {}
+        for i in range(26):
+            affine_val = (int(start_num) * i + int(end_num)) % 26
+            self.affine_dict[self.alphabet[i]] = self.alphabet[affine_val]
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -29,7 +24,7 @@ class Affine(Cipher):
 
         text = text.lower()
 
-        encrypted_text = [self.affine_alphabet[letter] for letter in text]
+        encrypted_text = [self.affine_dict[letter] for letter in text]
 
         return "".join(encrypted_text).upper()
 
@@ -40,11 +35,10 @@ class Affine(Cipher):
         """
 
         text = text.lower()
-
         decrypted_text = []
 
         for letter in text:
-            for key, val in self.affine_alphabet.items():
+            for key, val in self.affine_dict.items():
                 if letter == val:
                     decrypted_text.append(key)
 

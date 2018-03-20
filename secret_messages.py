@@ -2,7 +2,6 @@ import os
 
 from affine import Affine
 from atbash import Atbash
-from bifid import Bifid
 from caesar import Caesar
 from keyword_cipher import Keyword
 
@@ -15,7 +14,8 @@ def clear():
 
 def user_interface():
     """Command line menu providing an option to either encrypt or decrypt a value.
-    Add input settings required to perform the cipher process"""
+    Add input settings required to perform the cipher process.
+    """
 
     global encrypt_val
     while True:
@@ -50,12 +50,12 @@ def user_interface():
         if user_input in decrypt_input:
             decrypt_val = run_cipher(encrypt=False)
 
-            if encrypt_val == 'q':
+            if decrypt_val == 'q':
                 break
 
             print("\nYour decrypted value is: {}\n".format(decrypt_val))
 
-        input("Press Enter to continue...")
+        input("Press any key to continue.")
 
 
 def run_cipher(encrypt=True):
@@ -92,12 +92,25 @@ def run_cipher(encrypt=True):
         print("Value must contain letters only.\n")
         text = ask_for_value()
 
+    # Affine inputs
     if user_input in affine_input:
-        cipher = Affine()
+        aff_first_number = input("Please enter a beginning number for the Affine cipher (must be odd):\n")
+        aff_second_number = input("Please enter an ending number for the Affine cipher:\n")
 
+        while aff_first_number.isnumeric() is False \
+                or int(aff_first_number) % 2 == 0 \
+                or aff_second_number.isnumeric() is False:
+            print("Value must contain numbers. First number must be odd.\n")
+            aff_first_number = input("Please enter a beginning number for the Affine Cipher (must be odd):\n")
+            aff_second_number = input("Please enter an ending number for the Affine cipher:\n")
+
+        cipher = Affine(aff_first_number, aff_second_number)
+
+    # Atbash inputs
     if user_input in atbash_input:
         cipher = Atbash()
 
+    # Keyword inputs
     if user_input in keyword_cipher_input:
         user_keyword = input("Please enter your keyword for the Keyword Cipher:\n")
 
@@ -112,26 +125,35 @@ def run_cipher(encrypt=True):
 
     if encrypt:
         text = cipher.encrypt(text)
+        if input("Do you want to add a secret pad? (Y/n)\n").lower() == "y":
+            text = pad_option(text, cipher)
+
         val = cipher.char_blocks(text)
     else:
         text = cipher.remove_char_blocks(text)
+        if input("Was a secret pad used? (Y/n)\n").lower() == "y":
+            text = pad_option(text, cipher, encrypt=False)
+
         val = cipher.decrypt(text)
 
     return val
 
 
-def pad_option():
-    """Option for pad to add additional encryption"""
+def pad_option(text, cipher, encrypt=True):
+    """Option for pad to add additional encryption."""
 
-    # TODO: complete pad functionality
-
-    prompt = "Please enter the pad number:\n\n"
+    prompt = "Please enter the pad keyword, it must be at least ({}) letters:\n".format(len(text))
     user_input = str(input(prompt))
 
     while user_input.lower().isalpha() is False:
         print("Value must contain letters only.\n")
 
         user_input = str(input(prompt))
+
+    if encrypt:
+        return cipher.use_pad(text, user_input)
+    else:
+        return cipher.use_pad(text, user_input, encrypt=False)
 
 
 if __name__ == "__main__":

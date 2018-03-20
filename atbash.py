@@ -29,9 +29,9 @@ class Atbash(Cipher):
         text = text.lower()
 
         alpha_pos = [self.alphabet_rev.index(letter) for letter in text]
-        decypted_val = "".join([self.alphabet[int(pos)] for pos in alpha_pos])
+        decrypted_val = "".join([self.alphabet[int(pos)] for pos in alpha_pos])
 
-        return decypted_val.upper()
+        return decrypted_val.upper()
 
 
 if __name__ == "__main__":
