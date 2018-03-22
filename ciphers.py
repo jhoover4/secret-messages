@@ -1,5 +1,5 @@
 import string
-
+import random
 
 class Cipher:
 
@@ -13,32 +13,34 @@ class Cipher:
     def decrypt(self, text):
         raise NotImplementedError()
 
-    def char_blocks(self, encryption, padding=' '):
+    def get_padding_chars(self, num_chars):
+        padding_chars = []
+
+        for _ in range(num_chars):
+            padding_chars.append(chr(random.randrange(33,47)))
+
+        return "".join(padding_chars)
+
+    def char_blocks(self, encryption):
         """Output is displayed in 5 char blocks, with padding added as required.
         Sample output: The quick brown fox. = LFDKA NMYML K1KZE &XPQR
         """
 
-        if len(encryption) < 5:
-            return encryption
+        list_len = len(encryption)
 
-        else:
-            blocks = []
-            beg_count = 0
-            end_count = 5
-            list_len = len(encryption) + 1
+        if list_len % 5 > 0:
+            last_block_len = list_len % 5
+            encryption += self.get_padding_chars(5 - last_block_len)
 
-            while end_count < list_len:
-                blocks.append(encryption[beg_count:end_count])
+        split_encryption = [encryption[i:i+5] for i in range(0, len(encryption), 5)]
 
-                end_count += 5
-                beg_count += 5
-            if end_count + 1 != list_len:
-                blocks.append(encryption[beg_count:])
+        return " ".join(split_encryption)
 
-            return padding.join(blocks).strip()
+    @staticmethod
+    def remove_char_blocks(decryption):
+        decryption = ["" if not char.isalpha() else char for char in decryption]
 
-    def remove_char_blocks(self, decryption, padding=' '):
-        return decryption.replace(padding, "")
+        return "".join(decryption).replace(" ", "")
 
     def create_pad(self, text, keyword, encrypt=True):
         """Pad is a key that adds numbers of letters in key to correspond letter numbers of encrypted message

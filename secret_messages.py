@@ -69,7 +69,8 @@ def run_cipher(encrypt=True):
     prompt += "4) (K)eyword\n\n"
     prompt += "Type (q) to quit.\n"
 
-    user_input = str(input(prompt))
+
+    user_input = input(prompt)
 
     affine_input = [1, '1', 'af']
     atbash_input = [2, '2', 'at']
@@ -84,7 +85,12 @@ def run_cipher(encrypt=True):
         user_input = str(input(prompt))
 
     def ask_for_value():
-        return str(input("Enter value:\n").replace(" ", ""))
+        val_input = input("Enter value:\n")
+
+        if not encrypt:
+            val_input = Affine.remove_char_blocks(val_input)
+
+        return val_input.replace(" ", "")
 
     text = ask_for_value()
 
@@ -130,7 +136,6 @@ def run_cipher(encrypt=True):
 
         val = cipher.char_blocks(text)
     else:
-        text = cipher.remove_char_blocks(text)
         if input("Was a secret pad used? (Y/n)\n").lower() == "y":
             text = pad_option(text, cipher, encrypt=False)
 
