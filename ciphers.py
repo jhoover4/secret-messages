@@ -19,8 +19,7 @@ class Cipher:
         padding_chars = []
 
         for _ in range(num_chars):
-            # 33-47
-            padding_chars.append(chr(random.randrange(40,47)))
+            padding_chars.append(chr(random.randrange(33, 65)))
 
         return "".join(padding_chars)
 
@@ -32,7 +31,6 @@ class Cipher:
         new_encryption = []
 
         for word in encryption.split(" "):
-            new_word = ''
             if len(word) % 5 > 0:
                 if len(word) < 5:
                     new_word = word + self.get_padding_chars(5 - len(word))
@@ -46,7 +44,7 @@ class Cipher:
 
         new_encryption = "".join(new_encryption)
 
-        split_encryption = [new_encryption[i:i+5] for i in range(0, len(new_encryption), 5)]
+        split_encryption = [new_encryption[i:i + 5] for i in range(0, len(new_encryption), 5)]
 
         return " ".join(split_encryption)
 
