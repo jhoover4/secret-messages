@@ -4,7 +4,7 @@ from affine import Affine
 from atbash import Atbash
 from caesar import Caesar
 from keyword_cipher import Keyword
-
+from ciphers import Cipher
 
 def clear():
     """Clears screen"""
@@ -88,13 +88,13 @@ def run_cipher(encrypt=True):
         val_input = input("Enter value:\n")
 
         if not encrypt:
-            val_input = Affine.remove_char_blocks(val_input)
+            val_input = Cipher.remove_char_blocks(val_input)
 
-        return val_input.replace(" ", "")
+        return val_input
 
     text = ask_for_value()
 
-    while text.lower().isalpha() is False:
+    while text.lower().replace(" ", "").isalpha() is False:
         print("Value must contain letters only.\n")
         text = ask_for_value()
 

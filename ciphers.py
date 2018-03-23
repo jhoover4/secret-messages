@@ -1,5 +1,7 @@
 import string
 import random
+import re
+
 
 class Cipher:
 
@@ -17,7 +19,8 @@ class Cipher:
         padding_chars = []
 
         for _ in range(num_chars):
-            padding_chars.append(chr(random.randrange(33,47)))
+            # 33-47
+            padding_chars.append(chr(random.randrange(40,47)))
 
         return "".join(padding_chars)
 
@@ -26,21 +29,33 @@ class Cipher:
         Sample output: The quick brown fox. = LFDKA NMYML K1KZE &XPQR
         """
 
-        list_len = len(encryption)
+        new_encryption = []
 
-        if list_len % 5 > 0:
-            last_block_len = list_len % 5
-            encryption += self.get_padding_chars(5 - last_block_len)
+        for word in encryption.split(" "):
+            new_word = ''
+            if len(word) % 5 > 0:
+                if len(word) < 5:
+                    new_word = word + self.get_padding_chars(5 - len(word))
+                else:
+                    padding_needed = len(word) % 5
+                    new_word = word + self.get_padding_chars(5 - padding_needed)
+            else:
+                new_word = word
 
-        split_encryption = [encryption[i:i+5] for i in range(0, len(encryption), 5)]
+            new_encryption.append(new_word)
+
+        new_encryption = "".join(new_encryption)
+
+        split_encryption = [new_encryption[i:i+5] for i in range(0, len(new_encryption), 5)]
 
         return " ".join(split_encryption)
 
     @staticmethod
     def remove_char_blocks(decryption):
-        decryption = ["" if not char.isalpha() else char for char in decryption]
+        join_long_words = re.sub(r'\b\s+', '', decryption)
+        new_value = re.sub(r'[^a-zA-Z]+', ' ', join_long_words)
 
-        return "".join(decryption).replace(" ", "")
+        return new_value.strip()
 
     def create_pad(self, text, keyword, encrypt=True):
         """Pad is a key that adds numbers of letters in key to correspond letter numbers of encrypted message
